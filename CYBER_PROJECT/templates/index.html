@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI-Enhanced Intrusion Detection</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #00c6ff;
+        --secondary-color: #0072ff;
+        --background-color: #0d1117;
+        --container-color: #161b22;
+        --text-color: #c9d1d9;
+        --border-color: #30363d;
+        --input-background: #0d1117;
+        --success-color: #28a745;
+        --error-color: #dc3545;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: var(--container-color);
+        border: 1px solid var(--border-color);
+        padding: 40px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      }
+
+      h2 {
+        text-align: center;
+        font-weight: 600;
+        margin-bottom: 30px;
+        background: -webkit-linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-size: 0.9em;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--input-background);
+        color: var(--text-color);
+        outline: none;
+        font-size: 1em;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      input[type="number"]:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.25);
+      }
+
+      input[type="submit"] {
+        margin-top: 20px;
+        width: 100%;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-size: 1em;
+      }
+
+      input[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 114, 255, 0.4);
+      }
+
+      .prediction {
+        margin-top: 30px;
+        text-align: center;
+        background: var(--input-background);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      .prediction h3 {
+        font-weight: 600;
+        font-size: 1.1em;
+        color: var(--primary-color);
+      }
+
+      /* To make it more responsive */
+      @media (max-width: 480px) {
+        .container {
+          padding: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>AI Intrusion Detection</h2>
+      <form method="POST" action="/predict">
+        <div class="form-group">
+          <label for="flow_duration">Flow Duration:</label>
+          <input
+            type="number"
+            step="any"
+            name="flow_duration"
+            required
+            placeholder="e.g., 86940336"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="total_fwd_packets">Total Fwd Packets:</label>
+          <input
+            type="number"
+            step="any"
+            name="total_fwd_packets"
+            required
+            placeholder="e.g., 8"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="total_backward_packets">Total Backward Packets:</label>
+          <input
+            type="number"
+            step="any"
+            name="total_backward_packets"
+            required
+            placeholder="e.g., 5"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="total_length_fwd_packets"
+            >Total Length of Fwd Packets:</label
+          >
+          <input
+            type="number"
+            step="any"
+            name="total_length_fwd_packets"
+            required
+            placeholder="e.g., 629"
+          />
+        </div>
+
+        <input type="submit" value="Analyze Traffic" />
+      </form>
+
+      {% if prediction %}
+      <div class="prediction">
+        <h3>Prediction: {{ prediction }}</h3>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
